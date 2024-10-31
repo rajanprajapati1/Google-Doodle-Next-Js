@@ -11,10 +11,10 @@ const UseImageLoop = (isVisible) => {
         if (isVisible) {
             interval = setInterval(() => {
                 setCurrentImageIndex(prevIndex => (prevIndex + 1) % diyaImages.length);
-            }, 500); // Change image every 500 milliseconds
+            }, 500);
         }
 
-        return () => clearInterval(interval); // Cleanup on unmount or when isVisible changes
+        return () => clearInterval(interval); 
     }, [isVisible]);
 
     return diyaImages[currentImageIndex];

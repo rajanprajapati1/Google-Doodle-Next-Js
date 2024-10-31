@@ -5,13 +5,13 @@ import DiyaSvg from './../../public/unlit_diya.svg';
 import Image from 'next/image';
 import UseImageLoop from '@/hooks/UseImageLoop';
 import Star from './../../public/desktop_stars_4.svg'
-
+import overlay from './../../public/glow1.gif'
 
 const DiwaliDoodle = ({ isVisible, setIsVisible }) => {
     const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
     const [touchedImages, setTouchedImages] = useState(new Set());
     const currentDiyaImage = UseImageLoop(isVisible);
-    const totalImages = 8; // Adjust based on your number of images
+    const totalImages = 8; 
     const [shouldRender, setShouldRender] = useState(isVisible);
 
     useEffect(() => {
@@ -44,13 +44,13 @@ const DiwaliDoodle = ({ isVisible, setIsVisible }) => {
         if (isVisible) {
             setShouldRender(true);
         } else {
-            setShouldRender(false); // Start the exit animation
+            setShouldRender(false); 
         }
     }, [isVisible]);
 
     const handleAnimationComplete = () => {
         if (!isVisible) {
-            setShouldRender(false); // Remove from DOM after exit animation
+            setShouldRender(false);
         }
     };
 
@@ -70,7 +70,10 @@ const DiwaliDoodle = ({ isVisible, setIsVisible }) => {
                 exit={{ y: '100%', opacity: 0.5 }} // Slide down and fade out
                 transition={{ duration: 0.3 }} // Duration of the animation
                 style={{ cursor: "none" }} // Change cursor
-                onDoubleClick={() => setIsVisible(false)}
+                onDoubleClick={() =>{
+                    setIsVisible(false) ;
+    setTouchedImages(new Set())
+                }}
                 onAnimationComplete={handleAnimationComplete} // Handle completion
             >
                 <div className='left-diya flex flex-col items-center justify-center gap-36 flex-[0.5] h-screen'>
@@ -85,10 +88,16 @@ const DiwaliDoodle = ({ isVisible, setIsVisible }) => {
                         exit="exit"
                         transition={{ duration: 0.5 }}
                     >
-                        <Image src={touchedImages?.has(0) ? currentDiyaImage : DiyaSvg} alt='Diya 1' width={120} height={120} className='scale-125'
+                        <Image src={touchedImages?.has(0) ? currentDiyaImage : DiyaSvg}
+                         alt='Diya 1' width={120} height={120} 
+                         className='scale-125 bg-glow relative z-20'
                             onMouseEnter={() => handleTouch(0)} // Touch detection
                         />
-
+                            {touchedImages?.has(0) &&   <Image src={overlay}
+             alt='overlay' width={100} 
+             className='fixed w-[350px] -ml-40 -mt-60 h-[350px] z-10
+              opacity-35'
+             height={100}/>}
                     </motion.div>
                 </div>
 
@@ -102,7 +111,12 @@ const DiwaliDoodle = ({ isVisible, setIsVisible }) => {
                     >
                         <Image src={touchedImages?.has(1) ? currentDiyaImage : DiyaSvg}
                             onMouseEnter={() => handleTouch(1)} // Touch detection
-                            alt='Diya 2' width={110} height={110} className='scale-125' />
+                            alt='Diya 2' width={110} height={110} className='scale-125 relative z-20' />
+                                                        {touchedImages?.has(1) &&   <Image src={overlay}
+             alt='overlay' width={100} 
+             className='fixed w-[350px] -ml-40 -mt-60 h-[350px] z-10
+              opacity-35'
+             height={100}/>}
                     </motion.div>
                     <motion.div
                         variants={imageVariants}
@@ -114,7 +128,12 @@ const DiwaliDoodle = ({ isVisible, setIsVisible }) => {
                         <Image
                             src={touchedImages?.has(3) ? currentDiyaImage : DiyaSvg} onMouseEnter={() => handleTouch(3)} // Touch detection
 
-                            alt='Diya 3' width={95} height={95} className='scale-125' />
+                            alt='Diya 3' width={95} height={95} className='scale-125 relative z-20' />
+                                                        {touchedImages?.has(3) &&   <Image src={overlay}
+             alt='overlay' width={100} 
+             className='fixed w-[350px] -ml-40 -mt-60 h-[350px] z-10
+              opacity-35'
+             height={100}/>}
                     </motion.div>
                 </div>
 
@@ -129,7 +148,12 @@ const DiwaliDoodle = ({ isVisible, setIsVisible }) => {
                         <Image
                             src={touchedImages?.has(4) ? currentDiyaImage : DiyaSvg} onMouseEnter={() => handleTouch(4)} // Touch detection
 
-                            alt='Diya 4' width={90} height={90} className='scale-125' />
+                            alt='Diya 4' width={90} height={90} className='scale-125 relative z-20' />
+                                                        {touchedImages?.has(4) &&   <Image src={overlay}
+             alt='overlay' width={100} 
+             className='fixed w-[350px] -ml-40 -mt-60 h-[350px] z-10
+              opacity-35'
+             height={100}/>}
                     </motion.div>
                     <motion.div
                         variants={imageVariants}
@@ -139,9 +163,15 @@ const DiwaliDoodle = ({ isVisible, setIsVisible }) => {
                         transition={{ duration: 0.5, delay: 0.3 }} // Incremental delay
                     >
                         <Image
-                            src={touchedImages?.has(5) ? currentDiyaImage : DiyaSvg} onMouseEnter={() => handleTouch(5)} // Touch detection
-
-                            alt='Diya 5' width={130} height={130} className='scale-125' />
+                            src={touchedImages?.has(5) ? currentDiyaImage : DiyaSvg}
+                             onMouseEnter={() => handleTouch(5)} // Touch detection
+                      
+                            alt='Diya 5' width={130} height={130} className='scale-125 z-20 relative' />
+                                                        {touchedImages?.has(5) &&   <Image src={overlay}
+             alt='overlay' width={100} 
+             className='fixed w-[350px] -ml-40 -mt-60 h-[350px] z-10
+              opacity-35'
+             height={100}/>}
                     </motion.div>
                 </div>
 
@@ -156,7 +186,12 @@ const DiwaliDoodle = ({ isVisible, setIsVisible }) => {
                         <Image
                             src={touchedImages?.has(6) ? currentDiyaImage : DiyaSvg} onMouseEnter={() => handleTouch(6)} // Touch detection
 
-                            alt='Diya 6' width={105} height={105} className='scale-125' />
+                            alt='Diya 6' width={105} height={105} className='scale-125 z-20' />
+                            {touchedImages?.has(6) &&   <Image src={overlay}
+             alt='overlay' width={100} 
+             className='fixed w-[350px] -ml-40 -mt-60 h-[350px] z-10
+              opacity-35'
+             height={100}/>}
                     </motion.div>
                     <motion.div
                         variants={imageVariants}
@@ -166,9 +201,15 @@ const DiwaliDoodle = ({ isVisible, setIsVisible }) => {
                         transition={{ duration: 0.5, delay: 0.5 }} // Incremental delay
                     >
                         <Image
-                            src={touchedImages?.has(7) ? currentDiyaImage : DiyaSvg} onMouseEnter={() => handleTouch(7)} // Touch detection
-
+                            src={touchedImages?.has(7) ? currentDiyaImage : DiyaSvg}
+                             onMouseEnter={() => handleTouch(7)} // Touch detection
+                                  className='z-20'
                             alt='Diya 7' width={110} height={110} />
+                            {touchedImages?.has(7) &&   <Image src={overlay}
+             alt='overlay' width={100} 
+             className='fixed w-[350px] -ml-40 -mt-64 h-[350px] z-10
+              opacity-35'
+             height={100}/>}
                     </motion.div>
                 </div>
 
@@ -181,9 +222,15 @@ const DiwaliDoodle = ({ isVisible, setIsVisible }) => {
                         transition={{ duration: 0.5, delay: 0.6 }} // Incremental delay
                     >
                         <Image
-                            src={touchedImages?.has(8) ? currentDiyaImage : DiyaSvg} onMouseEnter={() => handleTouch(8)} // Touch detection
+                            src={touchedImages?.has(8) ? currentDiyaImage : DiyaSvg}
+                             onMouseEnter={() => handleTouch(8)} // Touch detection
 
-                            alt='Diya 8' width={150} height={150} className='scale-125' />
+                            alt='Diya 8' width={150} height={150} className='scale-125 relative z-20' />
+                           {touchedImages?.has(8) &&   <Image src={overlay}
+             alt='overlay' width={100} 
+             className='fixed w-[350px] -ml-40 -mt-64 h-[350px] z-10
+              opacity-35'
+             height={100}/>}
                     </motion.div>
                 </div>
 
@@ -218,7 +265,15 @@ const CustomCursor = ({ position, image }) => {
                 justifyContent: "center"
             }}
         >
-            <Image src={image} alt='Diya Cursor' width={100} height={100} className='relative z-20' />
+            <Image src={image}
+             alt='Diya Cursor' 
+             width={100}
+             height={100} className='logo relative z-20 ' />
+            <Image src={overlay}
+             alt='overlay' width={100} 
+             className='fixed w-[250px] -ml-24 -mt-8 h-[250px] z-10
+              opacity-35'
+             height={100}/>
             {/* <div className='ovrelay_diya w-[180]  h-[150] bg-[#c7c7c788] rounded-full  absolute -top-5 -left-8 right-0 bottom-0  z-0'></div> */}
         </div>
     );
